@@ -8,9 +8,10 @@ using TravelBlog.Models;
 namespace TravelBlog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class TravelBlogContextModelSnapshot : ModelSnapshot
+    [Migration("20160920182117_DB")]
+    partial class DB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -123,6 +124,24 @@ namespace TravelBlog.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TravelBlog.Models.ApplicationDestination", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Country");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Destinations");
+                });
+
             modelBuilder.Entity("TravelBlog.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id");
@@ -207,6 +226,13 @@ namespace TravelBlog.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TravelBlog.Models.ApplicationDestination", b =>
+                {
+                    b.HasOne("TravelBlog.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
         }
     }

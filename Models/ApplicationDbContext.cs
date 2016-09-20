@@ -9,6 +9,8 @@ namespace TravelBlog.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+
+        public DbSet<ApplicationDestination> Destinations { get; set; }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
