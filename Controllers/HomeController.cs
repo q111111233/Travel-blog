@@ -45,14 +45,15 @@ namespace TravelBlog.Controllers
             }
         }
 
-        //Login Using AJAX
+        ////Login Using AJAX
         [HttpPost]
         public async Task<IActionResult> LogIn(string username, string password)
         {
+            string[] loggedInUser = { username, password };
             Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(username, password, isPersistent: true, lockoutOnFailure: false);
             if (signInResult.Succeeded)
             {
-                return Json("Index");
+                return Json(loggedInUser);
             }
             else
             {
@@ -60,7 +61,7 @@ namespace TravelBlog.Controllers
             }
         }
 
-        //Log Out User
+        ////Log Out User
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {

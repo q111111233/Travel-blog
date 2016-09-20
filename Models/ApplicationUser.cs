@@ -9,5 +9,6 @@ namespace TravelBlog.Models
 {
     public class ApplicationUser : IdentityUser
     {
+
     }
 }

@@ -3,39 +3,81 @@
 @{
     ViewData["Title"] = "Index";
 }
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Travel Blog</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
-<h1>Welcome to the Epicodus Travel Blog!</h1>
-<hr />
-
-
-<h2>Log in</h2>
-<form action="LogIn" class="log-in">
-    <label for="username">Username: </label>
-    <input type="text" name="username" />
-    <label for="password">Password: </label>
-    <input type="text" name="password" />
-    <button type="submit">Submit</button>
-</form>
-<div id="login"></div>
-
-<h2>@Html.ActionLink("Register New Account", "Register")</h2>
-
-<script>
-    $(function () {
-        $('.log-in').submit(function (event) {
-            event.preventDefault();
-            $.ajax({
-                url: '@Url.Action("LogIn")',
-                type: 'POST',
-                dataType: 'json',
-                data: $(this).serialize(),
-                success: function (result) {
-                    var resultMessage = 'your username is: ' + result.userName + '<br>your password is: ' + result.password;
-                    $('#login').html(resultMessage);
-                }
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.log-in').submit(function (event) {
+                    event.preventDefault();
+                    $.ajax({
+                        url: '@Url.Action("LogIn")',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: $(this).serialize(),
+                        success: function (result) {
+                            var resultMessage = 'Your username is: ' + result[0] + '<br>Your password is: ' + result[1];
+                            if (result)
+                            {
+                                $("#pre-login").hide();
+                                $('#login').html(resultMessage);
+                                @*@using (Html.BeginForm("LogOut", "Home"))
+                                {
+                                    <input type="submit" value="Log Out" />
+                                }*@
+                            }
+                        }
+                    });
+                });
             });
-        });
-    });
+        </script>
+    </head>
+    <body>
+        <h1>Welcome to the Epicodus Travel Blog!</h1>
+        <hr />
 
-</script>
+        <div id="pre-login">
+            <form action="LogIn" class="log-in">
+                <h2>Log in</h2>
+                <label for="username">Username: </label>
+                <input type="text" name="username" />
+                <label for="password">Password: </label>
+                <input type="password" name="password" />
+                <button type="submit">Submit</button>
+            </form>
+            <h2>@Html.ActionLink("Register New Account", "Register")</h2>
+        </div>
 
+        <div id="login"></div>
+    </body>
+</html>
+
+
+@*<body>
+    <h1>Welcome to the Epicodus Travel Blog!</h1>
+    <hr />
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h2 id="login">Welcome</h2>
+
+            @using (Html.BeginForm("LogOut", "Home"))
+            {
+                <input type="submit" value="Log Out" />
+            }
+    }
+    else
+    {
+        <h2>Log in</h2>
+            <form action="LogIn" class="log-in">
+                <label for="username">Username: </label>
+                <input type="text" name="username" />
+                <label for="password">Password: </label>
+                <input type="password" name="password" />
+                <button type="submit">Submit</button>
+            </form>
+            <h2>@Html.ActionLink("Register New Account", "Register")</h2>
+    }
+</body>*@
