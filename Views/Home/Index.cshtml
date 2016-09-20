@@ -10,6 +10,7 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
+                $("#logout").hide();
                 $('.log-in').submit(function (event) {
                     event.preventDefault();
                     $.ajax({
@@ -23,10 +24,7 @@
                             {
                                 $("#pre-login").hide();
                                 $('#login').html(resultMessage);
-                                @*@using (Html.BeginForm("LogOut", "Home"))
-                                {
-                                    <input type="submit" value="Log Out" />
-                                }*@
+                                $("#logout").show();
                             }
                         }
                     });
@@ -51,33 +49,11 @@
         </div>
 
         <div id="login"></div>
-    </body>
-</html>
-
-
-@*<body>
-    <h1>Welcome to the Epicodus Travel Blog!</h1>
-    <hr />
-
-    @if (User.Identity.IsAuthenticated)
-    {
-        <h2 id="login">Welcome</h2>
-
+        <div id="logout">
             @using (Html.BeginForm("LogOut", "Home"))
             {
                 <input type="submit" value="Log Out" />
             }
-    }
-    else
-    {
-        <h2>Log in</h2>
-            <form action="LogIn" class="log-in">
-                <label for="username">Username: </label>
-                <input type="text" name="username" />
-                <label for="password">Password: </label>
-                <input type="password" name="password" />
-                <button type="submit">Submit</button>
-            </form>
-            <h2>@Html.ActionLink("Register New Account", "Register")</h2>
-    }
-</body>*@
+        </div>
+    </body>
+</html>
