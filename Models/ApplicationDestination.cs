@@ -18,5 +18,15 @@ namespace TravelBlog.Models
         public string Country { get; set; }
 
         public virtual ApplicationUser User { get; set; }
+
+        public ApplicationDestination(string city, string country, ApplicationUser user, int id = 0)
+        {
+            City = city;
+            Country = country;
+            User = user;
+            Id = id;
+        }
+
+        public ApplicationDestination() { }
     }
 }

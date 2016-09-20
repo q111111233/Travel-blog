@@ -10,7 +10,6 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#logout").hide();
                 $('.log-in').submit(function (event) {
                     event.preventDefault();
                     $.ajax({
@@ -19,14 +18,10 @@
                         dataType: 'json',
                         data: $(this).serialize(),
                         success: function (result) {
-                            var resultMessage = 'Your username is: ' + result[0] + '<br>Your password is: ' + result[1];
-                            if (result)
-                            {
-                                $("#pre-login").hide();
-                                $('#login').html(resultMessage);
-                                $("#logout").show();
-                                $("#register").hide();
-                            }
+                            var resultMessage = 'Your username is: ' + result[0] + '<br>Your password is: ' + result[1] + '<br>@Html.ActionLink("Create a Destination", "Index", "Destination")';
+                            $("#pre-login").hide();
+                            $("#register").hide();
+                            $('#login').html(resultMessage);
                         }
                     });
                 });
@@ -50,7 +45,16 @@
     <body>
         <h1>Welcome to the Epicodus Travel Blog!</h1>
         <hr />
-
+        @if (User.Identity.IsAuthenticated)
+        {
+            <p>Hello @User.Identity.Name!</p>
+            @using (Html.BeginForm("LogOut", "Home"))
+            {
+                <input type="submit" value="Log Out" />
+            }
+        }
+        else
+        {
         <div id="pre-login">
             <form action="LogIn" class="log-in">
                 <h2>Log in</h2>
@@ -74,11 +78,6 @@
 
         <div id="login"></div>
         <div id="register"></div>
-        <div id="logout">
-            @using (Html.BeginForm("LogOut", "Home"))
-            {
-                <input type="submit" value="Log Out" />
-            }
-        </div>
+        }
     </body>
 </html>
