@@ -7,4 +7,18 @@
 <h1>Welcome to the Epicodus Travel Blog!</h1>
 <hr />
 
-<h2>@Html.ActionLink("Register New Account", "Register")</h2>
+@if (User.Identity.IsAuthenticated)
+{
+    <h2>Welcome @User.Identity.Name!</h2>
+
+    @using (Html.BeginForm("LogOut", "Home"))
+    {
+        <input type="submit" value="Log Out" />
+    }
+}
+else
+{
+    <h2>@Html.ActionLink("Log In", "Login")</h2>
+    <h2>@Html.ActionLink("Register New Account", "Register")</h2>
+}
+

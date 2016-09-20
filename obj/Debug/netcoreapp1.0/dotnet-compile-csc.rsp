@@ -187,4 +187,5 @@
 "C:\Users\epicodus\Desktop\TravelBlog\src\TravelBlog\Migrations\TravelBlogContextModelSnapshot.cs"
 "C:\Users\epicodus\Desktop\TravelBlog\src\TravelBlog\Models\ApplicationDbContext.cs"
 "C:\Users\epicodus\Desktop\TravelBlog\src\TravelBlog\Models\ApplicationUser.cs"
+"C:\Users\epicodus\Desktop\TravelBlog\src\TravelBlog\ViewModels\LoginViewModel.cs"
 "C:\Users\epicodus\Desktop\TravelBlog\src\TravelBlog\ViewModels\RegisterViewModel.cs"
