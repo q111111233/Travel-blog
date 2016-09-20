@@ -33,5 +33,12 @@ namespace TravelBlog.Controllers
             _db.SaveChanges();
             return Json(destination);
         }
+
+        public async Task<IActionResult> List()
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUser = await _userManager.FindByIdAsync(userId);
+            return View(_db.Destinations.Where(x => x.User.Id == currentUser.Id));
+        }
     }
 }

@@ -1,0 +1,8 @@
+﻿@model IEnumerable<TravelBlog.Models.ApplicationDestination>
+
+<div id="destinations-list">
+    @foreach (var destination in Model)
+    {
+        <p>@destination.City, @destination.Country</p>
+    }
+</div>

@@ -18,7 +18,7 @@
                         dataType: 'json',
                         data: $(this).serialize(),
                         success: function (result) {
-                            var resultMessage = 'Your username is: ' + result[0] + '<br>Your password is: ' + result[1] + '<br>@Html.ActionLink("Create a Destination", "Index", "Destination")';
+                            var resultMessage = 'Your username is: ' + result[0] + '<br>Your password is: ' + result[1];
                             $("#pre-login").hide();
                             $("#register").hide();
                             $('#login').html(resultMessage);
@@ -52,6 +52,10 @@
             {
                 <input type="submit" value="Log Out" />
             }
+
+            @Html.ActionLink("Create a Destination", "Index", "Destination")
+            <br />
+            @Html.ActionLink("View All Destinations", "List", "Destination")
         }
         else
         {
