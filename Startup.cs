@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using TravelBlog.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TravelBlog
 {
     public class Startup
     {
         public IConfigurationRoot Configuration { get; set; }
-
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -25,30 +28,27 @@ namespace TravelBlog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddDbContext<AjaxDemoContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddEntityFramework()
-                .AddEntityFrameworkSqlServer();
-        }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+            services.AddEntityFramework()
+                .AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+        }
+        public void Configure(IApplicationBuilder app)
         {
-            loggerFactory.AddConsole();
+            app.UseIdentity();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{Action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("<p>Sorry, an error has occurred.</p><a href='Index'>Home</a>");
+                await context.Response.WriteAsync("<h1>Sorry, an error has occurred, please return <a href='/'>Home</a></h1>");
             });
         }
     }
