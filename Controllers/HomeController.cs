@@ -45,17 +45,14 @@ namespace TravelBlog.Controllers
             }
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
+        //Login Using AJAX
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> LogIn(string username, string password)
         {
-            Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, isPersistent: true, lockoutOnFailure: false);
+            Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(username, password, isPersistent: true, lockoutOnFailure: false);
             if (signInResult.Succeeded)
             {
-                return RedirectToAction("Index");
+                return Json("Index");
             }
             else
             {
