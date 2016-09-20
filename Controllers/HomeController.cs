@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TravelBlog.Models;
-using TravelBlog.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,19 +24,15 @@ namespace TravelBlog.Controllers
             return View();
         }
 
-        //Register New User
-        public IActionResult Register()
-        {
-            return View();
-        }
+        //Register New User Using AJAX
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(string username, string password)
         {
-            var newUser = new ApplicationUser { UserName = model.Username };
-            IdentityResult registeredUser = await _userManager.CreateAsync(newUser, model.Password);
+            var newUser = new ApplicationUser { UserName = username };
+            IdentityResult registeredUser = await _userManager.CreateAsync(newUser, password);
             if (registeredUser.Succeeded)
             {
-                return RedirectToAction("Index");
+                return Json(username);
             }
             else
             {
